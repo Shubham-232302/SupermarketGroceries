@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block start %}
+    <Header class="container-fluid" style="text-align: center; color:aquamarine; background-color: rgb(23, 17, 28); height: 100px;">
+        <h1>Welcome to GroceriesAtMarket</h1>
+    </Header>
+    <div class="container mt-5 card p-3 shadow-lg" style=" width: 35%;">
+        <h4>Want to add Category, SubCategory, Item ?</h4>
+        <hr>
+        <div class="d-flex justify-content-between">
+        <a href="./addCategory"><button class="btn btn-success" style="width:100%; text-align: center; display: flex;"> Add Category</button></a>
+        <a href="./addSubCategory"><button class="btn btn-success" style="width:100%; text-align: center; display: flex;"> Add subCategory</button></a>
+        <a href="./addItem"><button class="btn btn-success" style="width:100%; text-align: center; display: flex;"> Add Item</button></a>
+    </div>
+    </div>
+    <div class="container mt-3 card p-3 shadow-lg" style=" width: 35%;">
+        <h4>Want to update Category, SubCategory, Item ?</h4>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <a href="./updateCategory"><button class="btn btn-primary" style="width:100%; text-align: center; display: flex;"> Update Category</button></a>
+            <a href="./updateSubCategory"><button class="btn btn-primary" style="width:100%; text-align: center; display: flex;"> Update subCategory</button></a>
+            <a href="./updateItem"><button class="btn btn-primary" style="width:100%; text-align: center; display: flex;"> Update Item</button></a>
+        </div>    </div>
+    <div class="container mt-3 card p-3 shadow-lg" style=" width: 35%;">
+        <h4>Want to display Category, SubCategory, Item ?</h4>
+        <hr>
+        <button class="btn btn-warning" style="width:80%; text-align: center; float: left;"> Click Here to Display</button>
+    </div>
+    <div class="container mt-3 card p-3 shadow-lg" style=" width: 35%;">
+        <h4>Want to delete Category, SubCategory, Item ?</h4>
+        <hr>
+        <div class="d-flex justify-content-between">
+        <a href="./deleteCategory"><button class="btn btn-danger" style="width:100%; text-align: center; display: flex;"> Delete Category</button></a>
+        <a href="./delSubCategory"><button class="btn btn-danger" style="width:100%; text-align: center; display: flex;"> Delete subCategory</button></a>
+        <a href="./delItem"><button class="btn btn-danger" style="width:100%; text-align: center; display: flex;"> Delete Item</button></a>
+    </div>
+</div>
+{% endblock %}

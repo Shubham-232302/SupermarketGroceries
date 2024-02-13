@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block start %}
+<Header class="container-fluid" style="background-color: aquamarine; text-align: center; color: blueviolet;">
+    <h1> Groceries At Market</h1>
+    <a href="/" class="btn btn-success" type="submit">Home</a>
+
+</Header>
+<div class="container mt-5 card p-3 shadow-lg" style="text-align: center; background-color: aquamarine;">
+    <h1>Add Item</h1>
+    <hr>
+<form class="col-6 mx-auto"  method="post" action="{% url 'addItem' %}">
+    {% csrf_token %}
+<div class="mb-1" style="text-align: center;">
+    <label for="category">Category:</label>
+    <select id="category" required name="category">
+        <option value="" disabled selected>Select Category</option>
+        {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+    </select>
+</div>
+<br>
+<div class="mb-1" style="text-align: center;">
+    <label for="subcategory">Subcategory:</label>
+    <select id="subcategory" required name="subcategory" disabled>
+        <option value="" disabled selected>Select Subcategory</option>
+    </select>
+</div>
+<br>
+<div class="mb-1" style="text-align: center;">
+    <label for="item">Item:</label>
+    <input type="text" id="item" name="item" required placeholder="Enter Item" disabled>
+<br>
+</div>
+<div class="mb-1" style="text-align: center;">
+    <label for="price">price:</label>
+    <input type="text" id="price" required name="price" placeholder="Enter Price" disabled>
+</div>
+    <button class="btn btn-success" style="text-align: center;" type="submit">Add Item</button>
+</form>
+</div>
+<script>
+    // JavaScript
+    var subcategories = {{ subcategories|safe }};
+
+    document.getElementById("category").addEventListener("change", function() {
+        var selectedCategory = this.value;
+        var subcategoryDropdown = document.getElementById("subcategory");
+        // var itemInput = document.getElementById("item");
+
+        // Clear existing options
+        subcategoryDropdown.innerHTML = '<option value="" disabled selected>Select Subcategory</option>';
+
+        // Check if selectedCategory is in the subcategories object
+        if (subcategories.hasOwnProperty(selectedCategory)) {
+            subcategories[selectedCategory].forEach(function(subcategory) {
+                var option = new Option(subcategory, subcategory);
+                subcategoryDropdown.add(option);
+            });
+            subcategoryDropdown.disabled = false;
+        } else {
+            subcategoryDropdown.disabled = true;
+        }
+    });
+
+    document.getElementById("subcategory").addEventListener("change", function() {
+        var selectedSubcategory = this.value;
+        var itemInput = document.getElementById("item");
+        var priceInput=document.getElementById("price")
+
+        // Enable item input field
+        itemInput.disabled = false;
+        priceInput.disabled= false
+    });
+</script>
+
+
+
+{% endblock %}

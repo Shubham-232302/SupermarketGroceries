@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block start %}
+
+<Header class="container-fluid" style="background-color: aquamarine; text-align: center; color: blueviolet;">
+    <h1> Groceries At Market</h1>
+    <a href="/" class="btn btn-success" type="submit">Home</a>
+
+</Header>
+
+
+<div class="container mt-5 card p-3 shadow-lg" style="text-align: center; background-color: aquamarine;">
+<h2>Select SubCategory you want to delete</h2>
+<hr>
+<form class="col-6 mx-auto" action="{% url 'delSubCategory' %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-1">
+    <label for="category"> Category: </label>
+    <select name="category" required id="category">
+        <option value="" disabled selected>Select Category</option>
+        {% for category in categories %}
+        <option value="{{category}}">{{category}}</option>
+        {% endfor %}
+    </select>
+</div>
+    <br>
+    <div class="mb-1">
+    <label for="subcategory">SubCategory:</label>
+    <select name="subcategory" required id="subcategory" disabled>
+        <option value="" disabled selected> Select Sub Category</option>
+    </select>
+</div>
+    <br>
+
+    <!-- <label for="item">Item:</label>
+    <select name="item" id="item" disabled>
+        <option value="" disabled selected> Select Item</option>
+    </select> -->
+    <div class="mb-1">
+    <button class="btn btn-danger" style="text-align: center;" type="submit">Delete Item</button>
+    </div>
+</form>
+
+</div>
+
+<script>
+
+
+    var subcategories = {{ subcategories|safe}};
+    console.log(subcategories)
+    document.getElementById('category').addEventListener("change", function(){
+
+        var selectedCategory = this.value;
+        var subcategoryDropdown = document.getElementById("subcategory");
+
+        subcategoryDropdown.innerHTML = '<option value="" disabled selected>Select Subcategory</option>';
+        if (subcategories.hasOwnProperty(selectedCategory)){
+
+            subcategories[selectedCategory].forEach(function(subcategory){
+
+                var option = new Option(subcategory, subcategory);
+                subcategoryDropdown.add(option);
+                
+            });
+            subcategoryDropdown.disabled = false;
+        }else{
+            subcategoryDropdown.disabled = true;
+        }
+    });
+
+</script>
+
+
+{% endblock %}

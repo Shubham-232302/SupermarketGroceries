@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block start %}
+
+<Header class="container-fluid" style="background-color: aquamarine; text-align: center; color: blueviolet;">
+    <h1> Groceries At Market</h1>
+    <a href="/" class="btn btn-success" type="submit">Home</a>
+
+</Header>
+{{items}}
+{% for ele in items%}
+<p>{{ ele.name}}</p>
+{% endfor %}
+<div class="container mt-5 card p-3 shadow-lg" style="text-align: center; background-color: aquamarine;">
+<h2>Select Item you want to delete</h2>
+<hr>
+<form class="col-6 mx-auto" >
+
+<!-- </form>action="{% url 'displayData' %}" method="POST"> -->
+    {% csrf_token %}
+    <div class="mb-1">
+    <label for="category"> Category: </label>
+    <select name="category" id="category">
+        <option value="" disabled selected>Select Category</option>
+        {% for category in categories %}
+        <option value="{{category}}">{{category}}</option>
+        {% endfor %}
+    </select>
+</div>
+    <br>
+    <div class="mb-1">
+    <label for="subcategory">SubCategory:</label>
+    <select name="subcategory" id="subcategory" disabled>
+        <option value="" disabled selected> Select Sub Category</option>
+    </select>
+</div>
+    <br>
+
+    <div class="mb-1">
+    <button class="btn btn-primary" style="text-align: center;" type="submit" id="displayButton">Display</button>
+    </div>
+</div>
+</form>
+<div id="itemList">
+
+</div>
+
+</div>
+
+
+
+<script>
+    var items ="{{items|escapejs|safe }}";
+    console.log(items)
+
+    console.log(items.replace(/'/g, '"'))
+    var subcategories = {{ subcategories|safe }};
+    
+   
+    var jsonObject = JSON.parse(items.replace(/'/g, '"'))
+    console.log(jsonObject)
+
+
+    var selectedSubcategory;
+    var selectedCategory
+
+    function display(myObject) {
+        for (var key in jsonObject) {
+            console.log(key)
+            if ( key == selectedSubcategory && jsonObject.hasOwnProperty(key)) {
+                for (var li of jsonObject[key]){
+                    console.log(li)
+                    console.log(li['name'], li['price'])}
+                    var itemListContainer = document.getElementById("itemList");
+                    itemListContainer.innerHTML = "";
+console.log("shubham",jsonObject[key])
+                    jsonObject[key].forEach(function(item) {
+                        console.log("shubham",item.name)
+                    var itemElement = document.createElement("div");
+                    itemElement.innerHTML = `<strong>Name:</strong> ${item.name}, <strong>Price:</strong> ${item.price}`;
+                    itemListContainer.appendChild(itemElement);
+                });
+            }
+        }
+    }
+
+    document.getElementById('category').addEventListener("change", function () {
+        selectedCategory = this.value;
+        var subcategoryDropdown = document.getElementById("subcategory");
+
+        subcategoryDropdown.innerHTML = '<option value="" disabled selected>Select Subcategory</option>';
+        if (subcategories.hasOwnProperty(selectedCategory)) {
+            subcategories[selectedCategory].forEach(function (subcategory) {
+                var option = new Option(subcategory, subcategory);
+                subcategoryDropdown.add(option);
+            });
+            subcategoryDropdown.disabled = false;
+        } else {
+            subcategoryDropdown.disabled = true;
+        }
+    });
+
+    document.getElementById("subcategory").addEventListener("change", function () {
+        selectedSubcategory = this.value;
+    });
+
+    document.getElementById('displayButton').addEventListener("click", function () {
+        // Call the display function with updated subcategories
+        display(selectedSubcategory);
+    });
+</script>
+
+
+
+{% endblock %}

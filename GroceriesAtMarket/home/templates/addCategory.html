@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block start %}
+
+<div class="container-fluid">
+    <Header class="container-fluid" style="background-color: aquamarine; text-align: center; color: blueviolet;">
+        <h1> Groceries At Market</h1>
+        <a href="/" class="btn btn-success" type="submit">Home</a>
+    </Header>
+    <div class="container mt-5 card p-3 shadow-lg">
+    <form class="col-6 mx-auto" method="post">
+        {% csrf_token %}
+        <div class=" mb-3">
+            <h1>Add Category</h1>
+            <hr>
+          <label for="category" class="form-label">Category Name</label>
+          <input name="category" required type="text" class="form-control" id="category">
+        </div>
+        <button type="submit" class="btn btn-success">Add Category</button>
+      </form>
+    </div>
+</div>
+
+<!-- <div class="container-fluid">
+    <Header class="container-fluid" style="background-color: aquamarine; text-align: center; color: blueviolet;">
+        <h1> Groceries At Market</h1>
+    </Header>
+    <div class="container mt-5 card p-3 shadow-lg">
+    <form class="col-6 mx-auto" method="post">
+        {% csrf_token %}
+        <div class=" mb-3">
+            <h1>Add Sub-Category</h1>
+            <hr>
+            <select name="category">
+                <option value="" disabled selected>Select an option</option>
+                {% for ele in data %}
+                <option value="{{ele}}">{{ele}}</option>
+                {% endfor %}
+            </select>
+            <label for="subCategory" class="form-label">Sub Category Name</label>
+          <input name="subCategory" required type="text" class="form-control" id="category">
+        </div>
+        <button type="submit" class="btn btn-success">Add Category</button>
+      </form>
+    </div>
+</div> -->
+
+
+{% endblock %}
